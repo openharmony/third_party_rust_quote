@@ -79,20 +79,9 @@
 //!     }
 //! };
 //! ```
-//!
-//! <br>
-//!
-//! # Non-macro code generators
-//!
-//! When using `quote` in a build.rs or main.rs and writing the output out to a
-//! file, consider having the code generator pass the tokens through
-//! [prettyplease] before writing. This way if an error occurs in the generated
-//! code it is convenient for a human to read and debug.
-//!
-//! [prettyplease]: https://github.com/dtolnay/prettyplease
 
 // Quote types in rustdoc of other crates get linked to here.
-#![doc(html_root_url = "https://docs.rs/quote/1.0.35")]
+#![doc(html_root_url = "https://docs.rs/quote/1.0.23")]
 #![allow(
     clippy::doc_markdown,
     clippy::missing_errors_doc,
@@ -102,9 +91,10 @@
     clippy::wrong_self_convention,
 )]
 
-extern crate alloc;
-
-#[cfg(feature = "proc-macro")]
+#[cfg(all(
+    not(all(target_arch = "wasm32", target_os = "unknown")),
+    feature = "proc-macro"
+))]
 extern crate proc_macro;
 
 mod ext;
@@ -428,7 +418,7 @@ pub mod spanned;
 /// appears suffixed as integer literals by interpolating them as [`syn::Index`]
 /// instead.
 ///
-/// [`syn::Index`]: https://docs.rs/syn/2.0/syn/struct.Index.html
+/// [`syn::Index`]: https://docs.rs/syn/1.0/syn/struct.Index.html
 ///
 /// ```compile_fail
 /// let i = 0usize..self.fields.len();
@@ -629,14 +619,14 @@ macro_rules! quote_spanned {
 #[macro_export]
 macro_rules! quote_spanned {
     ($span:expr=>) => {{
-        let _: $crate::__private::Span = $crate::__private::get_span($span).__into_span();
+        let _: $crate::__private::Span = $span;
         $crate::__private::TokenStream::new()
     }};
 
     // Special case rule for a single tt, for performance.
     ($span:expr=> $tt:tt) => {{
         let mut _s = $crate::__private::TokenStream::new();
-        let _span: $crate::__private::Span = $crate::__private::get_span($span).__into_span();
+        let _span: $crate::__private::Span = $span;
         $crate::quote_token_spanned!{$tt _s _span}
         _s
     }};
@@ -644,13 +634,13 @@ macro_rules! quote_spanned {
     // Special case rules for two tts, for performance.
     ($span:expr=> # $var:ident) => {{
         let mut _s = $crate::__private::TokenStream::new();
-        let _: $crate::__private::Span = $crate::__private::get_span($span).__into_span();
+        let _: $crate::__private::Span = $span;
         $crate::ToTokens::to_tokens(&$var, &mut _s);
         _s
     }};
     ($span:expr=> $tt1:tt $tt2:tt) => {{
         let mut _s = $crate::__private::TokenStream::new();
-        let _span: $crate::__private::Span = $crate::__private::get_span($span).__into_span();
+        let _span: $crate::__private::Span = $span;
         $crate::quote_token_spanned!{$tt1 _s _span}
         $crate::quote_token_spanned!{$tt2 _s _span}
         _s
@@ -659,7 +649,7 @@ macro_rules! quote_spanned {
     // Rule for any other number of tokens.
     ($span:expr=> $($tt:tt)*) => {{
         let mut _s = $crate::__private::TokenStream::new();
-        let _span: $crate::__private::Span = $crate::__private::get_span($span).__into_span();
+        let _span: $crate::__private::Span = $span;
         $crate::quote_each_token_spanned!{_s _span $($tt)*}
         _s
     }};

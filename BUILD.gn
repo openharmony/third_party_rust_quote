@@ -14,16 +14,18 @@
 import("//build/ohos.gni")
 
 ohos_cargo_crate("lib") {
-  crate_name = "quote"
-  crate_type = "rlib"
-  crate_root = "src/lib.rs"
+    crate_name = "quote"
+    crate_type = "rlib"
+    crate_root = "src/lib.rs"
 
-  sources = [ "src/lib.rs" ]
-  edition = "2018"
-  cargo_pkg_version = "1.0.35"
-  cargo_pkg_authors = "David Tolnay <dtolnay@gmail.com>"
-  cargo_pkg_name = "quote"
-  cargo_pkg_description = "Quasi-quoting macro quote!(...)"
-  deps = [ "//third_party/rust/crates/proc-macro2:lib" ]
-  features = [ "proc-macro" ]
+    sources = ["src/lib.rs"]
+    edition = "2018"
+    cargo_pkg_version = "1.0.23"
+    cargo_pkg_authors = "David Tolnay <dtolnay@gmail.com>"
+    cargo_pkg_name = "quote"
+    cargo_pkg_description = "Quasi-quoting macro quote!(...)"
+    deps = ["//third_party/rust/crates/proc-macro2:lib"]
+    features = ["proc-macro"]
+    build_root = "build.rs"
+    build_sources = ["build.rs"]
 }
