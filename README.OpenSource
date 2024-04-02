@@ -3,7 +3,7 @@
     "Name": "quote",
     "License": "Apache License V2.0, MIT",
     "License File": "LICENSE-APACHE, LICENSE-MIT",
-    "Version Number": "1.0.35",
+    "Version Number": "1.0.23",
     "Owner": "fangting12@huawei.com",
     "Upstream URL": "https://github.com/dtolnay/quote",
     "Description": "A Rust library that provides support for generating Rust code."
