@@ -1,6 +1,6 @@
 [
   {
-    "Name": "quote",
+    "Name": "dtolnay/quote",
     "License": "Apache License V2.0, MIT",
     "License File": "LICENSE-APACHE, LICENSE-MIT",
     "Version Number": "1.0.35",
