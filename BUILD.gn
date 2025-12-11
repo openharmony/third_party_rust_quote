@@ -26,4 +26,7 @@ ohos_cargo_crate("lib") {
   cargo_pkg_description = "Quasi-quoting macro quote!(...)"
   deps = [ "//third_party/rust/crates/proc-macro2:lib" ]
   features = [ "proc-macro" ]
+  module_output_extension = ".rlib"
+  part_name = "rust_quote"
+  subsystem_name = "thirdparty"
 }
