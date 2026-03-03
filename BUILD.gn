@@ -18,9 +18,13 @@ ohos_cargo_crate("lib") {
   crate_type = "rlib"
   crate_root = "src/lib.rs"
 
+  rustflags = [
+    "--cfg",
+    "no_diagnostic_namespace"
+  ]
   sources = [ "src/lib.rs" ]
-  edition = "2018"
-  cargo_pkg_version = "1.0.37"
+  edition = "2021"
+  cargo_pkg_version = "1.0.43"
   cargo_pkg_authors = "David Tolnay <dtolnay@gmail.com>"
   cargo_pkg_name = "quote"
   cargo_pkg_description = "Quasi-quoting macro quote!(...)"
