@@ -105,6 +105,9 @@ fn test_array() {
 
     let ref_slice: &[X] = &[X, X];
     let _ = quote!(#(#ref_slice #ref_slice)*);
+
+    let array_of_array: [[u8; 2]; 2] = [[0; 2]; 2];
+    let _ = quote!(#(#(#array_of_array)*)*);
 }
 
 #[test]
@@ -197,7 +200,7 @@ fn test_floating() {
         #e32
         #e64
     };
-    let expected = concat!("2.345f32 2.345f64");
+    let expected = "2.345f32 2.345f64";
     assert_eq!(expected, tokens.to_string());
 }
 
@@ -558,6 +561,7 @@ fn test_type_inference_for_span() {
     let inferred = CallSite::get();
     let _ = quote_spanned!(inferred=> ...);
 
+    #[cfg(feature = "proc-macro")]
     if false {
         let proc_macro_span = proc_macro::Span::call_site();
         let _ = quote_spanned!(proc_macro_span.into()=> ...);
