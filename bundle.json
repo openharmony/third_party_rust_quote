@@ -2,7 +2,7 @@
   "name": "@ohos/rust_quote",
   "description": "A library that generates Rust code based on compile-time configuration options",
   "version": "5.0",
-  "license": "Apache License 2.0",
+  "license": "MIT",
   "publishAs": "code-segment",
   "segment": {
     "destPath": "third_party/rust/crates/quote"
